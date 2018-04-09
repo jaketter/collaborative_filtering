@@ -89,7 +89,7 @@ class Icf():
         return top_items
         
 if __name__ == "__main__":
-    df = pd.read_excel("Assignment 5_rating.xlsx", sheet_name = 0)
+    df = pd.read_excel("item-item_data.xlsx", sheet_name = 0)
     recom = Icf(df)
     #test
     target = "318: Shawshank Redemption, The (1994)"
@@ -101,7 +101,7 @@ if __name__ == "__main__":
     dict_norm = recom.sim_matrix(target, is_norm = True)
     print(dict_norm[(target, item)], "\n")
     #Q1-Q5: Using raw (unnormalized) similarity, what is the ID of the movie
-    #most similar to Toy Story?
+    #most similar to target movie?
     print("Top 5 movies with most similirity to " + target + ":")
     print(recom.recom(5, dict_raw), "\n")
     #Q6-Q10: Using unnormalized ratings for similarity, what is the ID of 
@@ -110,7 +110,7 @@ if __name__ == "__main__":
     print("Top 5 movies with highest recommendation to user " + str(user) + ":")
     print(recom.recom(5, preds), "\n")
     #Q11-15:Using similarities over normalized ratings, what is the ID of the 
-    #movie most similar to Toy Story?
+    #movie most similar to target movie?
     print("Top 5 movies with most similirity to " + target + " under normalization:")
     print(recom.recom(5, dict_norm), "\n")
     #Q16-Q20: Using normalized ratings for similarity, what is the ID of 
