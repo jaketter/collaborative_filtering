@@ -79,14 +79,19 @@ class UCF():
             weights = 0
             # Loop through the top n most similar users to the specified user (user_id)
             for neighbor in neighbors:
-                # Value is equal to the pearson correlation value of the neighbor and specified user
+                # Value is equal to the rating that the neighbor gave to the movie in coloumn col
                 value = df.loc[neighbor, col]
                 if value == 0:
                     weight = 0
                 else:
+                    # Weight is equal to the pearson correlation value between the specified user and neighbor
                     weight = ranked_p_corrs[(user_id, neighbor)]
+                # Sum all of the values and weights of all n neighbors for the current movie
                 values += value*weight
                 weights += weight
+            # The predicted rating for a movie equals:
+            # = sum of n closest neighbor's (rating for movie * p_corr value with specified user) / 
+            #   sum of p_corr values of n neighbors with specified user
             if weights == 0:
                 preds.append(0)
             else:
@@ -165,7 +170,7 @@ if __name__ == "__main__":
     user1 = 3712
     user2 = 89
     n = 5
-    num_recoms = 7
+    num_recoms = 10
     repeat_recoms = False
 
     #Print top movies for user1 without normalization
