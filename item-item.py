@@ -70,19 +70,27 @@ class Icf():
         for item in user_rated_items:
             user_list.append(item)
 
+        # Loop through all movies
         for item in self.cols:
             values = 0
             scores = 0
+            # Create a similarity matrix for the current movie (comparing the current movie to all other movies in data set)
             dict_sim = self.sim_matrix(item, is_norm = is_norm)
+            # Loop through all movies the user has previously rated
             for (key, value) in  user_rated_items:
                 if key == "User":
                     pass
                 else:
+                    # Score is equal to the cosine similarity between the two movies being compared
                     score = dict_sim[(item, str(key))]
                     if score < 0:
                         score = 0
+                    # Sum all of the similarity scores for the current movie and all movies the user has rated
                     scores += score
+                    # Sum the values for the current movie and all the movies the user has rated (Similarity * User's rating)
                     values += value*score
+            # The predicted user rating for the current movie is the sum of all (User rating * Similarity) 
+            # for all possible (User rated movie, movie) pairs 
             preds[item] = float(values)/scores     
         return preds
     
@@ -106,13 +114,13 @@ class Icf():
         return top_items
         
 if __name__ == "__main__":
-    df = pd.read_excel("item-item_data.xlsx", sheet_name = 0)
+    df = pd.read_excel("data-big.xls", sheet_name = 1)
     recom = Icf(df)
 
-    target = "318: Shawshank Redemption, The (1994)"
-    user = 5277
-    num_recoms = 20
-    recommend_repeats = False
+    target = "12: Finding Nemo (2003)"
+    user = 3712
+    num_recoms = 5
+    recommend_repeats = True
 
     dict_raw = recom.sim_matrix(target)
     dict_norm = recom.sim_matrix(target, is_norm = True)
