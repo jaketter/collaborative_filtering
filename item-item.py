@@ -56,7 +56,7 @@ class Icf():
             dict_sim[(target, col)] = self.sim_func(df, target, col)
         return dict_sim
     
-    def prediction (self, user, is_norm = False):
+    def prediction (self, user, user_list, is_norm = False):
         """
         predict items for user
         """
@@ -65,6 +65,10 @@ class Icf():
         df.index = df.User
         user_rated_items = [(key, value) for (key, value) in self.df.T.to_dict()[user].items() \
                             if not math.isnan(value)]
+
+        for item in user_rated_items:
+            user_list.append(item)
+
         for item in self.cols:
             values = 0
             scores = 0
@@ -81,11 +85,23 @@ class Icf():
             preds[item] = float(values)/scores     
         return preds
     
-    def recom (self, n, dicts):
+    def recom (self, n, dicts, user_list = []):
         """
         recommend top n items
         """
+        items_to_delete = []
+
+        for item in dicts:
+            for (movie, value) in user_list:
+                if item == movie:
+                        items_to_delete.append(item)
+
+
+        for item in items_to_delete:
+            del dicts[item]
+
         top_items = sorted(dicts, key = lambda x: dicts[x], reverse = True)[:n+1]
+
         return top_items
         
 if __name__ == "__main__":
@@ -93,28 +109,38 @@ if __name__ == "__main__":
     recom = Icf(df)
     #test
     target = "318: Shawshank Redemption, The (1994)"
-    item = "1210: Star Wars: Episode VI - Return of the Jedi (1983)"
     user = 5277
+    recommend_repeats = True
+
+    # print("Test cases:")
+    # print(dict_raw[(target, item)])
+    # print(dict_norm[(target, item)], "\n")
+
     dict_raw = recom.sim_matrix(target)
-    print("Test cases:")
-    print(dict_raw[(target, item)])
     dict_norm = recom.sim_matrix(target, is_norm = True)
-    print(dict_norm[(target, item)], "\n")
-    #Q1-Q5: Using raw (unnormalized) similarity, what is the ID of the movie
-    #most similar to target movie?
+
+    # Print top 5 most similar movies to target movie, unnormalized
     print("Top 5 movies with most similirity to " + target + ":")
     print(recom.recom(5, dict_raw), "\n")
-    #Q6-Q10: Using unnormalized ratings for similarity, what is the ID of 
-    #the highest recommended movie for specified user 
-    preds = recom.prediction(user)
+   
+    # Print top 5 recommended movies for specified user, unnormalized
+    user_list = []
+    preds = recom.prediction(user, user_list)
     print("Top 5 movies with highest recommendation to user " + str(user) + ":")
-    print(recom.recom(5, preds), "\n")
-    #Q11-15:Using similarities over normalized ratings, what is the ID of the 
-    #movie most similar to target movie?
+    if recommend_repeats:
+        print(recom.recom(5, preds), "\n")
+    else:
+        print(recom.recom(5, preds, user_list), "\n")
+    
+    # Print top 5 most similar users to specified movie, normalized
     print("Top 5 movies with most similirity to " + target + " under normalization:")
     print(recom.recom(5, dict_norm), "\n")
-    #Q16-Q20: Using normalized ratings for similarity, what is the ID of 
-    #the highest recommended movie for specified user 
-    preds = recom.prediction(user, is_norm = True)
+
+    # Print top 5 recommended movies for specified user, normalized
+    user_list_norm = []
+    preds = recom.prediction(user, user_list_norm, is_norm = True)
     print("Top 5 movies with highest recommendation to user " + str(user) + " under normalization:")
-    print(recom.recom(5, preds), "\n")
+    if recommend_repeats:
+        print(recom.recom(5, preds), "\n")
+    else:
+        print(recom.recom(5, preds, user_list_norm), "\n")
