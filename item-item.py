@@ -30,7 +30,7 @@ class Icf():
     
     def sim_func(self, df, item1, item2):
         """
-        cosine similirity function: sum(A.B)/(sqrt(sum(A^2))*sqrt(sum(A^2)))
+        cosine similirity function: sum(A.B)/(sqrt(sum(A^2))*sqrt(sum(B^2)))
         """
         nom = float((df[item1]*df[item2]).sum())
         denom = math.sqrt(df[item1].pow(2).sum())*math.sqrt(df[item2].pow(2).sum())
@@ -89,7 +89,7 @@ class Icf():
                     scores += score
                     # Sum the values for the current movie and all the movies the user has rated (Similarity * User's rating)
                     values += value*score
-            # The predicted user rating for the current movie is the sum of all (User rating * Similarity) 
+            # Predicted user rating for each movie is the sum of all (User rating * Similarity(user rated movie, current movie)) 
             # for all possible (User rated movie, movie) pairs 
             preds[item] = float(values)/scores     
         return preds
