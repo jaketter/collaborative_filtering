@@ -127,7 +127,7 @@ class UCF():
                     weight = 0
                 else:
                     # Otherwise, the wieght is equal to the pearson correlation value of the specified user and neighbor
-                    weight = ranked_p_corrs[(user_id, neighbor)
+                    weight = ranked_p_corrs[(user_id, neighbor)]
                 # Values is equal to the sum of difference between the neighbors avg rating and their rating for the current movie, 
                 # multiplied by the pearson correlation value
                 values += (value - n_mean[neighbor])*weight
@@ -137,10 +137,7 @@ class UCF():
             if weights == 0:
                 preds.append(user_mean)
             else:
-                if user_mean + values*1.0/weights > 5:
-                    preds.append(5.0)
-                else:
-                    preds.append(user_mean + values*1.0/weights)
+                preds.append(user_mean + values*1.0/weights)
         return preds 
     
     def recom(self, user_id, n, num_recoms, repeat_recoms, nor = False):
@@ -170,7 +167,12 @@ class UCF():
         top_items = sorted(pred_dict, key = lambda x: pred_dict[x], reverse = True)[:num_recoms]
         print("Top " + str(num_recoms) + " movies \t", "\t Prediction")
         for item in top_items:
-            print(item, "%.3f"%pred_dict[item])
+            if pred_dict[item] > 5:
+                print(item, "%.3f"%5)
+            else:
+                print(item, "%.3f"%pred_dict[item])
+            # Uncomment line if you want to see prediction values greater than 5.0
+            # print(item, "%.3f"%pred_dict[item])
         
         
 if __name__ == "__main__":
@@ -179,8 +181,8 @@ if __name__ == "__main__":
     ucf = UCF(df)
 
     user1 = 3712
-    user2 = 89
-    n = 5
+    user2 = 5261
+    n = 25
     num_recoms = 10
     repeat_recoms = False
 
