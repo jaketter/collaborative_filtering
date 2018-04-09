@@ -73,10 +73,13 @@ class UCF():
         df = self.df
         preds = []
         
+        # Loop through all movies in the database
         for col in df.columns:
             values = 0
             weights = 0
+            # Loop through the top n most similar users to the specified user (user_id)
             for neighbor in neighbors:
+                # Value is equal to the pearson correlation value of the neighbor and specified user
                 value = df.loc[neighbor, col]
                 if value == 0:
                     weight = 0
@@ -118,7 +121,10 @@ class UCF():
             if weights == 0:
                 preds.append(user_mean)
             else:
-                preds.append(user_mean + values*1.0/weights)
+                if user_mean + values*1.0/weights > 5:
+                    preds.append(5.0)
+                else:
+                    preds.append(user_mean + values*1.0/weights)
         return preds 
     
     def recom(self, user_id, n, num_recoms, repeat_recoms, nor = False):
