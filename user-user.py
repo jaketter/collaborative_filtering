@@ -107,22 +107,33 @@ class UCF():
         weights = ranked_p_corrs.values()
         df = self.df
         preds = []
+        # user_mean is the average movie rating given out by the specified user (user_id)
         user_mean = np.mean([num for num in df.loc[user_id, :] if num != 0 ])
+        # n_mean is dictionary mapping user_id to average rating for the n closest neighbors to the specified user
         n_mean = {}
         for neighbor in neighbors:
             n_mean[neighbor] = np.mean([num for num in df.loc[neighbor, :] \
                                        if num != 0 ]) 
+        # Loop through all movies in database
         for col in df.columns:
             values = 0
             weights = 0
+            # Loop through n most similar users
             for neighbor in neighbors:
+                # Value is equal to the rating the current neighbor gave the current movie
                 value = df.loc[neighbor, col]
+                # If the current neighbor has not rated the current movie, weight and value = 0
                 if value == 0:
                     weight = 0
                 else:
-                    weight = ranked_p_corrs[(user_id, neighbor)]
+                    # Otherwise, the wieght is equal to the pearson correlation value of the specified user and neighbor
+                    weight = ranked_p_corrs[(user_id, neighbor)
+                # Values is equal to the sum of difference between the neighbors avg rating and their rating for the current movie, 
+                # multiplied by the pearson correlation value
                 values += (value - n_mean[neighbor])*weight
+                # Weights is equal to the sum of all neighbors pearson correlation values with the specified user
                 weights += weight
+            # If none of the n nearest neighbors have rated the current movie, set specified user's pred rating equal to their avg rating
             if weights == 0:
                 preds.append(user_mean)
             else:
