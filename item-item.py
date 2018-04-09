@@ -66,6 +66,7 @@ class Icf():
         user_rated_items = [(key, value) for (key, value) in self.df.T.to_dict()[user].items() \
                             if not math.isnan(value)]
 
+        # Create list of movies user has previously rated
         for item in user_rated_items:
             user_list.append(item)
 
@@ -89,14 +90,14 @@ class Icf():
         """
         recommend top n items
         """
-        items_to_delete = []
 
+        items_to_delete = []
         for item in dicts:
             for (movie, value) in user_list:
                 if item == movie:
                         items_to_delete.append(item)
 
-
+        # Delete items that have been previously rated by the current user
         for item in items_to_delete:
             del dicts[item]
 
@@ -107,40 +108,61 @@ class Icf():
 if __name__ == "__main__":
     df = pd.read_excel("item-item_data.xlsx", sheet_name = 0)
     recom = Icf(df)
-    #test
+
     target = "318: Shawshank Redemption, The (1994)"
     user = 5277
-    recommend_repeats = True
-
-    # print("Test cases:")
-    # print(dict_raw[(target, item)])
-    # print(dict_norm[(target, item)], "\n")
+    num_recoms = 20
+    recommend_repeats = False
 
     dict_raw = recom.sim_matrix(target)
     dict_norm = recom.sim_matrix(target, is_norm = True)
 
     # Print top 5 most similar movies to target movie, unnormalized
-    print("Top 5 movies with most similirity to " + target + ":")
-    print(recom.recom(5, dict_raw), "\n")
+    print("Top " + str(num_recoms) + " movies with most similirity to " + target + ":")
+    print("\n")
+    movies = recom.recom(num_recoms, dict_raw)
+    for item in movies:
+        print(item[1])
    
+    print("\n\n")
     # Print top 5 recommended movies for specified user, unnormalized
     user_list = []
     preds = recom.prediction(user, user_list)
-    print("Top 5 movies with highest recommendation to user " + str(user) + ":")
+    print("Top " + str(num_recoms) + " movies with highest recommendation to user " + str(user) + ":")
+    print("\n")
+    top_items = []
     if recommend_repeats:
-        print(recom.recom(5, preds), "\n")
+        top_items = recom.recom(num_recoms, preds)
     else:
-        print(recom.recom(5, preds, user_list), "\n")
-    
+        top_items = recom.recom(num_recoms, preds, user_list)
+
+    for item in top_items:
+        # print(item, "\tPredicted rating: " + "%.3f"%preds[item])
+        print(item)
+        print("\tPredicted rating: " + "%.3f"%preds[item])
+    print("\n\n")
+
     # Print top 5 most similar users to specified movie, normalized
-    print("Top 5 movies with most similirity to " + target + " under normalization:")
-    print(recom.recom(5, dict_norm), "\n")
+    print("Top " + str(num_recoms) + " movies with most similirity to " + target + " under normalization:")
+    print("\n")
+    movies = recom.recom(num_recoms, dict_norm)
+    for item in movies:
+        print(item[1])
+
+    print("\n\n")
 
     # Print top 5 recommended movies for specified user, normalized
     user_list_norm = []
     preds = recom.prediction(user, user_list_norm, is_norm = True)
-    print("Top 5 movies with highest recommendation to user " + str(user) + " under normalization:")
+    print("Top " + str(num_recoms) + " movies with highest recommendation to user " + str(user) + " under normalization:")
+    print("\n")
     if recommend_repeats:
-        print(recom.recom(5, preds), "\n")
+        top_items = recom.recom(num_recoms, preds)
     else:
-        print(recom.recom(5, preds, user_list_norm), "\n")
+        top_items = recom.recom(num_recoms, preds, user_list_norm)
+
+    for item in top_items:
+        # print(item, "\tPredicted rating: " + "%.3f"%preds[item])
+        print(item)
+        print("\tPredicted rating: " + "%.3f"%preds[item])
+
