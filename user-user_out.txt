@@ -1,0 +1,36 @@
+Top movies for 3712: 
+Top 5 movies 	 	 Prediction
+641: Requiem for a Dream (2000) 5.000
+105: Back to the Future (1985) 4.739
+107: Snatch (2000) 4.651
+155: The Dark Knight (2008) 4.623
+77: Memento (2000) 4.495
+
+
+Top movies for 5261: 
+Top 5 movies 	 	 Prediction
+38: Eternal Sunshine of the Spotless Mind (2004) 5.000
+238: The Godfather (1972) 5.000
+11: Star Wars: Episode IV - A New Hope (1977) 4.541
+453: A Beautiful Mind (2001) 4.516
+197: Braveheart (1995) 4.305
+
+
+Top movies for 3712 with normalization
+Top 5 movies 	 	 Prediction
+641: Requiem for a Dream (2000) 5.000
+105: Back to the Future (1985) 5.000
+155: The Dark Knight (2008) 5.000
+1572: Die Hard: With a Vengeance (1995) 5.000
+85: Raiders of the Lost Ark (Indiana Jones and the Raiders of the Lost Ark) (1981) 5.000
+
+
+Top movies for 5261 with normalization
+Top 5 movies 	 	 Prediction
+238: The Godfather (1972) 4.161
+9802: The Rock (1996) 3.623
+120: The Lord of the Rings: The Fellowship of the Ring (2001) 3.594
+122: The Lord of the Rings: The Return of the King (2003) 3.594
+5503: The Fugitive (1993) 3.594
+
+

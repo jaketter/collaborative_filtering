@@ -1,0 +1,57 @@
+Top 5 movies with most similirity to 12: Finding Nemo (2003):
+
+
+12: Finding Nemo (2003)
+114: Pretty Woman (1990)
+9806: The Incredibles (2004)
+808: Shrek (2001)
+601: E.T. the Extra-Terrestrial (1982)
+1891: Star Wars: Episode V - The Empire Strikes Back (1980)
+
+
+
+Top 5 movies with highest recommendation to user 3712:
+
+
+243: High Fidelity (2000)
+	Predicted rating: 4.521
+107: Snatch (2000)
+	Predicted rating: 4.521
+671: Harry Potter and the Sorcerer's Stone (a.k.a. Harry Potter and the Philosopher's Stone) (2001)
+	Predicted rating: 4.519
+807: Seven (a.k.a. Se7en) (1995)
+	Predicted rating: 4.515
+672: Harry Potter and the Chamber of Secrets (2002)
+	Predicted rating: 4.513
+278: The Shawshank Redemption (1994)
+	Predicted rating: 4.511
+
+
+
+Top 5 movies with most similirity to 12: Finding Nemo (2003) under normalization:
+
+
+12: Finding Nemo (2003)
+8587: The Lion King (1994)
+568: Apollo 13 (1995)
+640: Catch Me If You Can (2002)
+161: Ocean's Eleven (2001)
+1422: The Departed (2006)
+
+
+
+Top 5 movies with highest recommendation to user 3712 under normalization:
+
+
+1891: Star Wars: Episode V - The Empire Strikes Back (1980)
+	Predicted rating: 4.630
+180: Minority Report (2002)
+	Predicted rating: 4.623
+672: Harry Potter and the Chamber of Secrets (2002)
+	Predicted rating: 4.616
+671: Harry Potter and the Sorcerer's Stone (a.k.a. Harry Potter and the Philosopher's Stone) (2001)
+	Predicted rating: 4.591
+1572: Die Hard: With a Vengeance (1995)
+	Predicted rating: 4.588
+393: Kill Bill: Vol. 2 (2004)
+	Predicted rating: 4.586

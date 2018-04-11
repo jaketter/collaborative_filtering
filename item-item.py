@@ -120,7 +120,7 @@ if __name__ == "__main__":
     target = "12: Finding Nemo (2003)"
     user = 3712
     num_recoms = 5
-    recommend_repeats = True
+    recommend_repeats = False
 
     dict_raw = recom.sim_matrix(target)
     dict_norm = recom.sim_matrix(target, is_norm = True)

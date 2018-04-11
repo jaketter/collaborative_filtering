@@ -182,8 +182,8 @@ if __name__ == "__main__":
 
     user1 = 3712
     user2 = 5261
-    n = 25
-    num_recoms = 10
+    n = 5
+    num_recoms = 5
     repeat_recoms = False
 
     #Print top movies for user1 without normalization
